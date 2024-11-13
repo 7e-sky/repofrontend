@@ -43,6 +43,9 @@ export default function RecipeReviewCard(props) {
   const classes = useStyles();
   const { secteur } = props;
 
+  // Vérifie si le secteur ou sous-secteur a des produits
+  const hasProduits = (sousSecteur) => sousSecteur.count > 0;
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -68,12 +71,11 @@ export default function RecipeReviewCard(props) {
               <React.Fragment key={i}>
                 <ListItem
                   button
-                  component={Link} // Utilisation de Link de react-router-dom pour la navigation client-side
-                  to={`/vente-produits/${secteur.slug}/${sousSecteur.slug}`} // Modification de l'URL avec react-router
+                  component={Link}
+                  to={`/vente-produits/${secteur.slug}/${sousSecteur.slug}`}
+                  disabled={!hasProduits(sousSecteur)} // Désactive le lien si aucun produit
                 >
-                  <Icon className="text-16 arrow-icon">
-                    keyboard_arrow_right
-                  </Icon>
+                  <Icon className="text-16 arrow-icon">keyboard_arrow_right</Icon>
                   <ListItemText
                     disableTypography
                     primary={
