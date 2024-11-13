@@ -63,13 +63,13 @@ export default function RecipeReviewCard(props) {
       />
       <CardContent className={clsx(classes.content, "p-0")}>
         <List dense={true}>
-          {secteur.sousSecteurs &&
+          {secteur.sousSecteurs && secteur.sousSecteurs.length > 0 ? (
             secteur.sousSecteurs.map((sousSecteur, i) => (
               <React.Fragment key={i}>
                 <ListItem
                   button
-                  component="a"
-                  href={`/vente-produits/${secteur.slug}/${sousSecteur.slug}`}
+                  component={Link} // Utilisation de Link de react-router-dom pour la navigation client-side
+                  to={`/vente-produits/${secteur.slug}/${sousSecteur.slug}`} // Modification de l'URL avec react-router
                 >
                   <Icon className="text-16 arrow-icon">
                     keyboard_arrow_right
@@ -82,14 +82,19 @@ export default function RecipeReviewCard(props) {
                         className="normal-case"
                         style={{ fontSize: 12 }}
                       >
-                        {sousSecteur.name + " (" + sousSecteur.count + ")"}
+                        {sousSecteur.name} ({sousSecteur.count || 0})
                       </Typography>
                     }
                   />
                 </ListItem>
                 <Divider component="li" />
               </React.Fragment>
-            ))}
+            ))
+          ) : (
+            <Typography variant="body2" color="textSecondary" className="p-4">
+              Aucun sous-secteur disponible
+            </Typography>
+          )}
         </List>
       </CardContent>
       <CardActions disableSpacing>
