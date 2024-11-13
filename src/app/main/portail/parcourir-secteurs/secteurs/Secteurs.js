@@ -177,9 +177,9 @@ function Secteurs(props) {
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={4} className="sticky top-0">
-                    <Paper className="w-full h-200 p-32 mt-16 text-center">
+                   {/*  <Paper className="w-full h-200 p-32 mt-16 text-center">
                         Ads
-                    </Paper>
+                    </Paper> */}
                 </Grid>
             </Grid>
         </div >
