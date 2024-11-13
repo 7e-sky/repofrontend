@@ -136,7 +136,7 @@ function Secteurs(props) {
                                     <>
                                         {
                                             generate(
-                                                <Grid item sm={6} xs={12}>
+                                                <Grid item sm={4} xs={12}>
                                                     <ContentLoader
                                                         speed={2}
                                                         width={300}
@@ -164,7 +164,7 @@ function Secteurs(props) {
                                     (
 
                                         filteredData && filteredData.map((item, index) => (
-                                            <Grid item sm={6} xs={12} key={index}>
+                                            <Grid item sm={4} xs={12} key={index}>
 
                                                 <CardSecteur {...props} secteur={item} />
                                             </Grid>
