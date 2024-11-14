@@ -61,7 +61,7 @@ export default function RecipeReviewCard(props) {
         }
         title={secteur.name}
       />
-      <CardContent className={clsx(classes.content, "p-0")}>
+      {/* <CardContent className={clsx(classes.content, "p-0")}>
         <List dense={true}>
           {secteur.sousSecteurs && secteur.sousSecteurs.length > 0 ? (
             secteur.sousSecteurs.map((sousSecteur, i) => (
@@ -96,7 +96,8 @@ export default function RecipeReviewCard(props) {
             </Typography>
           )}
         </List>
-      </CardContent>
+      </CardContent> */}
+      <Divider component="li" />
       <CardActions disableSpacing>
         <Button
           size="small"
