@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Popper, ClickAwayListener, MenuItem, Icon, IconButton, ListItemText, Paper, TextField, Tooltip, Typography, ListItemSecondaryAction, Avatar, ListItemAvatar, Grid } from '@material-ui/core';
+import { Popper, ClickAwayListener, MenuItem, Icon, IconButton, ListItemText, Paper, TextField, Tooltip, Typography, ListItemSecondaryAction, Avatar, ListItemAvatar, Grid, Link, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import Autosuggest from 'react-autosuggest';
@@ -161,7 +161,13 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.text.secondary,
         fontSize: '0.875rem',
         textAlign: 'center'
-    }
+    },
+    showAllContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: theme.spacing(1),
+        marginTop: theme.spacing(2),
+    },
 }));
 
 function renderSectionTitle(section, classes) {
@@ -278,6 +284,13 @@ function Search(props) {
     const popperNode = useRef(null);
     const dispatch = useDispatch();
 
+    // Définir childrenArray à partir des suggestions
+    const childrenArray = globalSearch.suggestions ? globalSearch.suggestions.map((suggestion, index) => (
+        <MenuItem key={index}>
+            <ListItemText primary={suggestion.name || suggestion.titre || suggestion.societe} />
+        </MenuItem>
+    )) : [];
+
     function showSearch() {
         dispatch(Actions.showSearch());
         document.addEventListener("keydown", escFunction, false);
@@ -336,6 +349,12 @@ function Search(props) {
         history.push(url);
         hideSearch();
     }
+
+    // Ajoutez cette fonction pour gérer l'affichage de tous les résultats en fonction du mot-clé
+    const handleShowAll = () => {
+        const searchText = globalSearch.searchText || ''; // Récupérer le texte de recherche
+        history.push(`/search?q=${encodeURIComponent(searchText)}`); // Rediriger vers la page de recherche
+    };
 
     function handleSuggestionsClearRequested() {
         dispatch(Actions.clearSuggestions());
@@ -425,6 +444,24 @@ function Search(props) {
             </div>
         );
     }
+
+    function renderNoResults() {
+        return (
+            <div className={classes.noResultsContainer}>
+                <Icon className={classes.noResultsIcon}>search_off</Icon>
+                <Typography className={classes.noResultsText}>
+                    Aucun résultat trouvé
+                </Typography>
+                <Typography className={classes.noResultsSubText}>
+                    Aucun élément ne correspond à votre recherche "{globalSearch.searchText}"
+                </Typography>
+                <Button onClick={handleShowAll} color="primary">
+                    Afficher tout
+                </Button>
+            </div>
+        );
+    }
+
     const renderSuggestionsContainer = ({ containerProps, children }) => {
         const childrenArray = Array.isArray(children) ? children : [children];
 
@@ -448,15 +485,7 @@ function Search(props) {
                     }}
                 >
                     <Paper elevation={3} square {...containerProps} className={classes.mainPaper}>
-                        <div className={classes.noResultsContainer}>
-                            <Icon className={classes.noResultsIcon}>search_off</Icon>
-                            <Typography className={classes.noResultsText}>
-                                Aucun résultat trouvé
-                            </Typography>
-                            <Typography className={classes.noResultsSubText}>
-                                Aucun élément ne correspond à votre recherche "{globalSearch.searchText}"
-                            </Typography>
-                        </div>
+                        {renderNoResults()}
                     </Paper>
                 </Popper>
             );
@@ -490,46 +519,33 @@ function Search(props) {
         return (
             <Popper
                 anchorEl={popperNode.current}
-                open={Boolean(children) || globalSearch.noSuggestions || globalSearch.loading}
+                open={Boolean(children)}
                 popperOptions={{ positionFixed: true }}
                 className="z-9999"
-                style={{ 
-                    width: '100%',
-                    maxWidth: getMaxWidth(activeSections),
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    margin: '0 auto'
-                }}
             >
                 <Paper elevation={3} square {...containerProps} className={classes.mainPaper}>
-                    <div className={classes.searchResults}>
-                        <Grid 
-                            container 
-                            spacing={2}
-                            className={classes.sectionsContainer}
-                            justifyContent="center"
-                            style={{
-                                margin: 0,
-                                width: '100%'
-                            }}
-                        >
-                            {sections.map((section, index) => (
-                                section.content && (
-                                    <Grid 
-                                        item 
-                                        style={{ width: '320px' }}  // Largeur fixe pour chaque section
-                                        key={index}
-                                    >
-                                        <div className={classes.sectionWrapper}>
-                                            <div className={classes.sectionContent}>
-                                                {section.content}
-                                            </div>
+                    <Grid 
+                        container 
+                        spacing={2}
+                        className={classes.sectionsContainer}
+                        justifyContent="center"
+                    >
+                        {sections.map((section, index) => (
+                            section.content && (
+                                <Grid 
+                                    item 
+                                    style={{ width: '320px' }}  // Largeur fixe pour chaque section
+                                    key={index}
+                                >
+                                    <div className={classes.sectionWrapper}>
+                                        <div className={classes.sectionContent}>
+                                            {section.content}
                                         </div>
-                                    </Grid>
-                                )
-                            ))}
-                        </Grid>
-                    </div>
+                                    </div>
+                                </Grid>
+                            )
+                        ))}
+                    </Grid>
                 </Paper>
             </Popper>
         );
@@ -622,39 +638,16 @@ function Search(props) {
                             </div>
                         </Tooltip>
                         {globalSearch.opened && (
-                            <ClickAwayListener onClickAway={handleClickAway}>
-                                <Paper
-                                    className="absolute left-0 right-0 h-full z-9999"
-                                    square={true}
-                                >
-                                    <div className="flex items-center w-full" ref={popperNode}>
-                                        <Autosuggest
-                                            {...autosuggestProps}
-                                            inputProps={{
-                                                classes,
-                                                placeholder: 'Rechercher un produit, une activité, un fournisseur',
-                                                value: globalSearch.searchText || '',
-                                                onChange: handleChange,
-                                                onKeyDown: (event) => {
-                                                    if (event.key === 'Enter') {
-                                                        event.preventDefault();
-                                                    }
-                                                },
-                                                InputLabelProps: {
-                                                    shrink: true
-                                                },
-                                                autoFocus: true
-                                            }}
-                                            theme={{
-                                                container: "flex flex-1 w-full",
-                                                suggestionsList: classes.suggestionsList,
-                                                suggestion: classes.suggestion
-                                            }}
-                                        />
-                                        <IconButton onClick={hideSearch} className="mx-8">
-                                            <Icon>close</Icon>
-                                        </IconButton>
-                                    </div>
+                            <ClickAwayListener onClickAway={() => dispatch(Actions.hideSearch())}>
+                                <Paper className={classes.searchResults} elevation={1}>
+                                    {childrenArray.length === 0 ? (
+                                        <div>Aucun résultat trouvé</div>
+                                    ) : (
+                                        childrenArray
+                                    )}
+                                    <Button onClick={handleShowAll} color="primary">
+                                        Afficher tout
+                                    </Button>
                                 </Paper>
                             </ClickAwayListener>
                         )}
