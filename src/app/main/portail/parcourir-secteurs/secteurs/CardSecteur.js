@@ -31,8 +31,20 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
   },
   btn: {
-    fontSize: 11,
-    padding: "0px 8px",
+    padding: '10px 20px', // Ajouter un peu de padding pour rendre le bouton plus large
+    textTransform: 'none', // Ne pas forcer la majuscule du texte
+    borderRadius: '4px',   // Adoucir les bords du bouton
+    boxShadow: 'none',     // Désactiver l'ombre
+    fontWeight: 'bold',    // Mettre le texte en gras pour plus de visibilité
+  },
+  cardActions: {
+    display: 'flex',
+    justifyContent: 'center',  // Centrer horizontalement
+    alignItems: 'center',       // Centrer verticalement si nécessaire
+    width: '100%',
+  },
+  icon: {
+    marginLeft: '8px', // Espace entre le texte et l'icône
   },
   content: {
     minHeight: 156,
@@ -97,20 +109,19 @@ export default function RecipeReviewCard(props) {
           )}
         </List>
       </CardContent> */}
-      <Divider component="li" />
-      <CardActions disableSpacing>
-        <Button
-          size="small"
-          color="secondary"
-          component={Link}
-          to={`/annuaire-entreprises/${secteur.id}-${secteur.slug}`}
-          className={clsx(classes.btn)}
-          variant="outlined"
-        >
-          VOIR TOUT LE SECTEUR{" "}
-          <Icon className="ml-4 arrow-icon">keyboard_arrow_right</Icon>
-        </Button>
-      </CardActions>
+     <CardActions className={classes.cardActions} disableSpacing>
+      <Button
+        size="small"
+        color="secondary"
+        component={Link}
+        to={`/annuaire-entreprises/${secteur.id}-${secteur.slug}`}
+        className={clsx(classes.btn)}
+        variant="outlined"
+      >
+        VOIR TOUT LE SECTEUR
+        <Icon className={clsx(classes.icon)}>keyboard_arrow_right</Icon>
+      </Button>
+    </CardActions>
     </Card>
   );
 }
