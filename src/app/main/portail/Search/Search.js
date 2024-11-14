@@ -455,9 +455,7 @@ function Search(props) {
                 <Typography className={classes.noResultsSubText}>
                     Aucun élément ne correspond à votre recherche "{globalSearch.searchText}"
                 </Typography>
-                <Button onClick={handleShowAll} color="primary">
-                    Afficher tout
-                </Button>
+                
             </div>
         );
     }
