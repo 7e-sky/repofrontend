@@ -68,8 +68,8 @@ export default function RecipeReviewCard(props) {
               <React.Fragment key={i}>
                 <ListItem
                   button
-                  component={Link} // Utilisation de Link de react-router-dom pour la navigation client-side
-                  to={`/vente-produits/${secteur.slug}/${sousSecteur.slug}`} // Modification de l'URL avec react-router
+                  //component={Link} // Utilisation de Link de react-router-dom pour la navigation client-side
+                  //to={`/vente-produits/${secteur.slug}/${sousSecteur.slug}`} // Modification de l'URL avec react-router
                 >
                   <Icon className="text-16 arrow-icon">
                     keyboard_arrow_right
