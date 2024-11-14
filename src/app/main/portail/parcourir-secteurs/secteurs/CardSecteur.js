@@ -4,23 +4,17 @@ import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
-import {
-  List,
-  ListItem,
-  Icon,
-  ListItemText,
-  Button,
-  Divider,
-} from "@material-ui/core";
+import { Icon, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { URL_SITE } from "@fuse/Constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
+    display: 'flex',
+    flexDirection: 'column', // S'assurer que les éléments sont bien disposés en colonne
   },
   media: {
     height: 0,
@@ -40,14 +34,12 @@ const useStyles = makeStyles((theme) => ({
   cardActions: {
     display: 'flex',
     justifyContent: 'center',  // Centrer horizontalement
-    alignItems: 'center',       // Centrer verticalement si nécessaire
+    alignItems: 'center',      // Centrer verticalement si nécessaire
     width: '100%',
+    padding: theme.spacing(1),  // Ajouter un peu de padding pour l'espacement
   },
   icon: {
     marginLeft: '8px', // Espace entre le texte et l'icône
-  },
-  content: {
-    minHeight: 156,
   },
 }));
 
@@ -73,55 +65,19 @@ export default function RecipeReviewCard(props) {
         }
         title={secteur.name}
       />
-      {/* <CardContent className={clsx(classes.content, "p-0")}>
-        <List dense={true}>
-          {secteur.sousSecteurs && secteur.sousSecteurs.length > 0 ? (
-            secteur.sousSecteurs.map((sousSecteur, i) => (
-              <React.Fragment key={i}>
-                <ListItem
-                  button
-                  //component={Link} // Utilisation de Link de react-router-dom pour la navigation client-side
-                  //to={`/vente-produits/${secteur.slug}/${sousSecteur.slug}`} // Modification de l'URL avec react-router
-                >
-                  <Icon className="text-16 arrow-icon">
-                    keyboard_arrow_right
-                  </Icon>
-                  <ListItemText
-                    disableTypography
-                    primary={
-                      <Typography
-                        type="body2"
-                        className="normal-case"
-                        style={{ fontSize: 12 }}
-                      >
-                        {sousSecteur.name} ({sousSecteur.count || 0})
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-                <Divider component="li" />
-              </React.Fragment>
-            ))
-          ) : (
-            <Typography variant="body2" color="textSecondary" className="p-4">
-              Aucun sous-secteur disponible
-            </Typography>
-          )}
-        </List>
-      </CardContent> */}
-     <CardActions className={classes.cardActions} disableSpacing>
-      <Button
-        size="small"
-        color="secondary"
-        component={Link}
-        to={`/annuaire-entreprises/${secteur.id}-${secteur.slug}`}
-        className={clsx(classes.btn)}
-        variant="outlined"
-      >
-        VOIR TOUT LE SECTEUR
-        <Icon className={clsx(classes.icon)}>keyboard_arrow_right</Icon>
-      </Button>
-    </CardActions>
+      <CardActions className={classes.cardActions} disableSpacing>
+        <Button
+          size="small"
+          color="secondary"
+          component={Link}
+          to={`/annuaire-entreprises/${secteur.id}-${secteur.slug}`}
+          className={clsx(classes.btn)}
+          variant="outlined"
+        >
+          VOIR TOUT LE SECTEUR
+          <Icon className={clsx(classes.icon)}>keyboard_arrow_right</Icon>
+        </Button>
+      </CardActions>
     </Card>
   );
 }
