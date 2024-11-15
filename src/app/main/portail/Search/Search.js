@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Popper, ClickAwayListener, MenuItem, Icon, IconButton, ListItemText, Paper, TextField, Tooltip, Typography, ListItemSecondaryAction, Avatar, ListItemAvatar, Grid, Link, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
@@ -283,6 +283,7 @@ function Search(props) {
     const suggestionsNode = useRef(null);
     const popperNode = useRef(null);
     const dispatch = useDispatch();
+    const [showNoResults, setShowNoResults] = useState(false);
 
     // Définir childrenArray à partir des suggestions
     const childrenArray = globalSearch.suggestions ? globalSearch.suggestions.map((suggestion, index) => (
@@ -362,10 +363,12 @@ function Search(props) {
 
     function handleChange(event, { newValue }) {
         dispatch(Actions.setSearchText(newValue));
+        setShowNoResults(newValue.trim() !== '');
     }
 
     function handleClickAway(event) {
-        return !suggestionsNode.current || !suggestionsNode.current.contains(event.target) && hideSearch();
+        setShowNoResults(false);
+        hideSearch();
     }
 
     function renderInputComponent(inputProps) {
@@ -446,18 +449,21 @@ function Search(props) {
     }
 
     function renderNoResults() {
-        return (
-            <div className={classes.noResultsContainer}>
-                <Icon className={classes.noResultsIcon}>search_off</Icon>
-                <Typography className={classes.noResultsText}>
-                    Aucun résultat trouvé
-                </Typography>
-                <Typography className={classes.noResultsSubText}>
-                    Aucun élément ne correspond à votre recherche "{globalSearch.searchText}"
-                </Typography>
-                
-            </div>
-        );
+        // Vérifier si le texte de recherche n'est pas vide et qu'il n'y a pas de résultats
+        if (globalSearch.searchText.trim() !== '' && globalSearch.suggestions.length === 0 && showNoResults) {
+            return (
+                <div className={classes.noResultsContainer}>
+                    <Icon className={classes.noResultsIcon}>search_off</Icon>
+                    <Typography className={classes.noResultsText}>
+                        Aucun résultat trouvé
+                    </Typography>
+                    <Typography className={classes.noResultsSubText}>
+                        Aucun élément ne correspond à votre recherche "{globalSearch.searchText}"
+                    </Typography>
+                </div>
+            );
+        }
+        return null; // Ne rien afficher si du texte est vide ou s'il y a des résultats
     }
 
     const renderSuggestionsContainer = ({ containerProps, children }) => {
