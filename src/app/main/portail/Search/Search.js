@@ -327,7 +327,7 @@ function Search(props) {
             url = `/vente-produits?q=${suggestion.value}`;
         }
         else if (suggestion.autreActivites) {
-            url = `/vente-produits?q=${suggestion.value}`;
+            url = `/vente-produits?activite=${suggestion.value}`;
         }
         else if (suggestion.autreActualites) {
             url = `/actualites?q=${suggestion.value}`;
@@ -447,7 +447,7 @@ function Search(props) {
                         margin: '0 auto'
                     }}
                 >
-                    <Paper elevation={3} square {...containerProps} className={classes.mainPaper}>
+                    {/* <Paper elevation={3} square {...containerProps} className={classes.mainPaper}>
                         <div className={classes.noResultsContainer}>
                             <Icon className={classes.noResultsIcon}>search_off</Icon>
                             <Typography className={classes.noResultsText}>
@@ -457,7 +457,7 @@ function Search(props) {
                                 Aucun élément ne correspond à votre recherche "{globalSearch.searchText}"
                             </Typography>
                         </div>
-                    </Paper>
+                    </Paper> */}
                 </Popper>
             );
         }
