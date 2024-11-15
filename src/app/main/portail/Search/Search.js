@@ -327,7 +327,7 @@ function Search(props) {
             url = `/vente-produits?q=${suggestion.value}`;
         }
         else if (suggestion.autreActivites) {
-            url = `/vente-produits?activite=${suggestion.value}`;
+            url = `/vente-produits?q=${suggestion.value}`;
         }
         else if (suggestion.autreActualites) {
             url = `/actualites?q=${suggestion.value}`;
