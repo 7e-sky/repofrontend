@@ -488,9 +488,9 @@ function Search(props) {
                         margin: '0 auto'
                     }}
                 >
-                    <Paper elevation={3} square {...containerProps} className={classes.mainPaper}>
+                    {/* <Paper elevation={3} square {...containerProps} className={classes.mainPaper}>
                         {renderNoResults()}
-                    </Paper>
+                    </Paper> */}
                 </Popper>
             );
         }
