@@ -40,6 +40,22 @@ function ToolbarLayout3(props) {
           <div className="flex flex-shrink items-center">
             <PSecteurs />
           </div>
+            <Hidden mdDown>
+          <Typography className="uppercase font-bold ml-24"color="primary">
+          <a
+                href="https://www.boopursal.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-button"
+              >
+                <img src="assets/images/logos/icon.png" alt="Boopursal" style={{ height: '20px', marginRight: '8px' }} />
+                <span>Boopursal</span>
+              </a>
+            
+          
+
+          </Typography>
+          </Hidden>
 
           <div className="flex flex-1">
             <Hidden xsDown>
