@@ -87,7 +87,7 @@ function ToolbarLayout3(props) {
                 className="link-button"
               >
      <img
-  src="assets/images/logos/icon.png"
+  src="assets/images/logos/iconboo.png"
   alt="Boopursal"
   style={{
     height: '30px',
