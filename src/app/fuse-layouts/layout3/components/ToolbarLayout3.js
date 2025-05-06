@@ -49,7 +49,7 @@ function ToolbarLayout3(props) {
                 rel="noopener noreferrer"
                 className="link-button"
               >
-                <img src="assets/images/logos/icon.png" alt="Boopursal" style={{ height: '20px', marginRight: '8px' }} />
+                <img src="assets/images/logos/iconboo.png" alt="Boopursal" style={{ height: '20px', marginRight: '8px' }} />
                 <span>Boopursal</span>
               </a>
             
