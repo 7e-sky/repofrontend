@@ -9,6 +9,7 @@ import UserMenu from "app/fuse-layouts/shared-components/UserMenu";
 import history from "@history";
 import Search from "../../../main/portail/Search/Search";
 import PSecteurs from "app/fuse-layouts/shared-components/PSecteurs";
+import { Typography } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   separator: {
     width: 1,
