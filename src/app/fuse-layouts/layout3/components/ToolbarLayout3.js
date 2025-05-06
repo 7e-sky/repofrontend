@@ -70,13 +70,38 @@ function ToolbarLayout3(props) {
 
           <div className="flex">
             <Hidden smUp>
+          
               {history.location && history.location.pathname === "/" ? (
                 ""
               ) : (
                 <Search />
               )}
-
+             
+            
               <div className={classes.separator} />
+              <div className="flex flex-shrink items-center">
+          <a
+                href="https://www.boopursal.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-button"
+              >
+     <img
+  src="assets/images/logos/icon.png"
+  alt="Boopursal"
+  style={{
+    height: '30px',
+    marginRight: '8px',
+   
+  }}
+/>
+
+              </a>
+              </div>
+            
+          
+
+         
             </Hidden>
             <UserMenu />
 
